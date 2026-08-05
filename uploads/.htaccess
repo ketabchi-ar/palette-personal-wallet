@@ -1,0 +1,13 @@
+# غیرفعال کردن اجرای PHP در پوشه uploads
+<FilesMatch "\.php$">
+    Deny from all
+</FilesMatch>
+
+# فقط اجازه فایل‌های تصویری
+<FilesMatch "\.(jpg|jpeg|png|webp|gif)$">
+    Allow from all
+    Require all granted
+</FilesMatch>
+
+# جلوگیری از listing دایرکتوری
+Options -Indexes

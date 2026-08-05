@@ -1,0 +1,17 @@
+# اطلاعات خصوصی و داده‌های محیط اجرا
+config.php
+data/*.db
+data/*.db-*
+database.json
+uploads/*
+!uploads/.htaccess
+backups/*
+error.log
+error_log
+*.log
+
+# فایل‌های خروجی و سیستم‌عامل
+*.zip
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,29 @@
+# ============================================
+# Cash App — .htaccess
+# ============================================
+# وقتی وردپرس در روت نصبه، باید یک خط به فایل
+# .htaccess روت اضافه کنید (قبل از قوانین وردپرس):
+#
+#   RewriteRule ^cash2(/.*)?$ - [L]
+#
+# این خط باعث میشه وردپرس این پوشه رو نادیده بگیره
+# ============================================
+
+# فایل پیش‌فرض پوشه
+DirectoryIndex index.html
+
+# غیرفعال کردن directory listing
+Options -Indexes
+
+# محافظت از فایل‌های حساس (دسترسی فقط از طریق API)
+<FilesMatch "^(config\.php|database\.json|error\.log|db\.php|mali\.db)$">
+    Deny from all
+    Require all denied
+</FilesMatch>
+
+# پوشه backups فقط از طریق API قابل دسترسی باشد
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^backups/ - [F,L]
+    RewriteRule ^data/ - [F,L]
+</IfModule>
