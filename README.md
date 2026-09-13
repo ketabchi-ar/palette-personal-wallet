@@ -1,5 +1,9 @@
 # Palette Personal Wallet
 
+
+[![DevSponsors](https://img.shields.io/badge/DevSponsors-Verified_OSS-6366f1?style=for-the-badge&logo=github)](https://devsponsors.github.io)
+[![Sponsor](https://img.shields.io/badge/Sponsor-DevSponsors_Hub-emerald?style=for-the-badge&logo=github-sponsors)](https://devsponsors.github.io)
+
 یک اپلیکیشن فارسی، راست‌چین و نصب‌پذیر برای مدیریت دخل‌وخرج شخصی. این پروژه با تمرکز بر استفاده روزمره طراحی شده است: ثبت سریع و دقیق تراکنش، گزارش ماهانه، مدیریت چند کیف‌پول، رسیدهای تصویری و دستیار مالی مبتنی بر هوش مصنوعی.
 
 > این نسخه یک برنامه PHP + SQLite است و برای اجرا روی هاست PHP طراحی شده؛ GitHub Pages از PHP، پایگاه‌داده و ورود کاربران پشتیبانی نمی‌کند.
