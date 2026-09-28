@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mali-app-v5';
+const CACHE_NAME = 'mali-app-v6';
 
 self.addEventListener('install', (e) => {
     self.skipWaiting();

@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head><meta charset="utf-8">
     
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -37,86 +37,244 @@
             --border-color: #333333;
         }
 
-        body { font-family: 'Vazirmatn', sans-serif; background-color: var(--bg-color); color: var(--text-main); padding-bottom: 90px; transition: all 0.3s ease; overflow-x: hidden; }
-        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding-bottom: 90px;
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 680px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 100vh;
+        }
+
         .dashboard-header {
             background: linear-gradient(135deg, #1e293b, #0f172a);
-            color: white; border-bottom-left-radius: 1.5rem; border-bottom-right-radius: 1.5rem;
-            padding: 2rem 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            color: white;
+            border-bottom-left-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
-        .stat-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(4px); border-radius: 1rem; padding: 1rem; color: white; }
-        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border-radius: 1rem;
+            padding: 1rem;
+            color: white;
+        }
+
         .actions-scroll, .month-scroll, .tags-scroll {
-            display: flex; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
-            gap: 0.5rem; padding: 0.5rem 1.5rem; scroll-snap-type: x mandatory;
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            gap: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            scroll-snap-type: x mandatory;
         }
         .actions-scroll::-webkit-scrollbar, .month-scroll::-webkit-scrollbar, .tags-scroll::-webkit-scrollbar { display: none; }
-        .month-btn { white-space: nowrap; scroll-snap-align: center; border-radius: 50rem; padding: 0.5rem 1.25rem; font-size: 0.875rem; transition: all 0.2s; }
-        
-        .tx-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 1rem; padding: 1rem; margin-bottom: 0.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between; transition: all 0.3s; }
-        .tx-icon-wrapper { width: 48px; height: 48px; border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;}
+        .month-btn {
+            white-space: nowrap;
+            scroll-snap-align: center;
+            border-radius: 50rem;
+            padding: 0.5rem 1.25rem;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .tx-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s;
+        }
+        .tx-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
 
         .fab-btn {
-            position: fixed; bottom: 1.5rem; right: 1.5rem; width: 56px; height: 56px; border-radius: 1rem;
-            background-color: #0d6efd; color: white; display: flex; align-items: center; justify-content: center;
-            font-size: 1.75rem; box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4); border: none; z-index: 1000;
+            position: fixed;
+            bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+            right: 1.5rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 1rem;
+            background-color: #0d6efd;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+            border: none;
+            z-index: 1000;
+        }
+        @media (min-width: 720px) {
+            .fab-btn {
+                right: calc(50% - 320px);
+            }
         }
         .fab-btn:active { transform: scale(0.95); }
 
-        .custom-modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1050; display: none; align-items: flex-end; justify-content: center; backdrop-filter: blur(2px); }
+        .custom-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1050;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            backdrop-filter: blur(2px);
+        }
         .custom-modal-backdrop.show { display: flex; animation: fadeIn 0.2s; }
-        .custom-modal-content { background: var(--card-bg); color: var(--text-main); width: 100%; max-width: 500px; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; padding: 1.5rem; animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); max-height: 90vh; overflow-y: auto; }
+        .custom-modal-content {
+            background: var(--card-bg);
+            color: var(--text-main);
+            width: 100%;
+            max-width: 500px;
+            border-top-left-radius: 1.5rem;
+            border-top-right-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
+            max-height: 85vh;
+            overflow-y: auto;
+            margin-bottom: env(safe-area-inset-bottom, 0px);
+        }
 
-        .mini-dialog { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); color: var(--text-main); padding: 1.5rem; border-radius: 1rem; z-index: 1100; width: 90%; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 1px solid var(--border-color); }
-        .mini-dialog.show { display: block; animation: zoomIn 0.2s; }
-        .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1090; }
+        @media (min-width: 768px) {
+            .custom-modal-backdrop {
+                align-items: center !important;
+                padding: 1.5rem;
+            }
+            .custom-modal-content {
+                border-radius: 1.5rem !important;
+                max-height: 90vh;
+            }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .receipt-thumb {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .canvas-isolation { position: absolute; left: -10000px; top: -10000px; }
+        #receiptTemplate {
+            width: 380px;
+            background: #ffffff;
+            color: #212529;
+            padding: 24px;
+            border-radius: 16px;
+            font-family: 'Vazirmatn', sans-serif;
+            box-sizing: border-box;
+        }
+        .receipt-dashed { border-top: 2px dashed #dee2e6; margin: 15px 0; }
+        .receipt-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .receipt-lbl { color: #6c757d; font-size: 0.9rem; }
+        .receipt-val { font-weight: bold; }
+
+        .mini-dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            color: var(--text-main);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 1100;
+            display: none;
+            width: 90%;
+            max-width: 320px;
+        }
+        .mini-dialog.show { display: block; }
+        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 1090; display: none; }
         .overlay.show { display: block; }
 
-        /* Dark Mode Input Overrides */
-        .form-control, .form-select, .input-group-text { background-color: var(--input-bg) !important; color: var(--text-main) !important; border-color: var(--border-color) !important; }
-        .form-control::placeholder { color: var(--text-muted) !important; }
-        .text-dark { color: var(--text-main) !important; }
-        .text-muted { color: var(--text-muted) !important; }
-        .bg-white { background-color: var(--card-bg) !important; }
-        .bg-light { background-color: var(--input-bg) !important; }
-        .border-light { border-color: var(--border-color) !important; }
-
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes zoomIn { from { transform: translate(-50%, -50%) scale(0.9); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
-
-        /* --- Print Styles (Visual PDF Optimization) --- */
-        @media print {
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .fab-btn, .actions-scroll, .month-scroll, .custom-modal-backdrop, .overlay, .mini-dialog, .input-group, #themeToggleBtn, #notificationBox { display: none !important; }
-            body { background: white !important; color: black !important; padding: 0 !important; }
-            .dashboard-header { background: white !important; color: black !important; border: 2px solid #ccc; border-radius: 1rem; box-shadow: none; padding: 1rem; }
-            .stat-card { background: #f8f9fa !important; color: black !important; border: 1px solid #ddd; }
-            .stat-card div { color: black !important; }
-            .tx-card { border: 1px solid #ccc !important; box-shadow: none !important; page-break-inside: avoid; background: white !important; color: black !important; }
-            .progress { border: 1px solid #ddd; }
+        .mention-chip {
+            background: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+            border-radius: 50rem;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            white-space: nowrap;
         }
-        
-        .receipt-thumb { width: 40px; height: 40px; object-fit: cover; border-radius: 0.5rem; cursor: pointer; border: 1px solid var(--border-color);}
-        .mention-chip { font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 50rem; cursor: pointer; background-color: var(--input-bg); color: var(--text-main); border: 1px solid var(--border-color); white-space: nowrap; transition: all 0.2s;}
-        .mention-chip:hover, .mention-chip.active { background-color: #0d6efd; color: white; border-color: #0d6efd; }
+        .mention-chip.active { background: #0d6efd; color: white; }
 
-        /* Hidden Wrap to prevent Mobile Overflow/Scroll bugs from Canvas Templates */
-        .canvas-isolation { width: 0; height: 0; overflow: hidden; position: absolute; }
-
-        #receiptTemplate {
-            position: fixed; left: -10000px; top: -10000px; width: 400px;
-            background: #fff; padding: 30px; border-radius: 16px;
-            font-family: 'Vazirmatn', sans-serif; color: #333;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #eee;
+        /* Dark mode overrides for Bootstrap utility classes */
+        body.dark-mode .bg-white,
+        body.dark-mode .bg-light {
+            background-color: var(--card-bg) !important;
+            color: var(--text-main) !important;
         }
-        .receipt-dashed { border-top: 2px dashed #ccc; margin: 20px 0; }
-        .receipt-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 15px; }
-        .receipt-val { font-weight: bold; color: #111; }
-        .receipt-lbl { color: #777; }
+        body.dark-mode .text-dark {
+            color: var(--text-main) !important;
+        }
+        body.dark-mode .border-light,
+        body.dark-mode .border {
+            border-color: var(--border-color) !important;
+        }
+        body.dark-mode .input-group-text,
+        body.dark-mode .form-control,
+        body.dark-mode .form-select {
+            background-color: var(--input-bg) !important;
+            color: var(--text-main) !important;
+            border-color: var(--border-color) !important;
+        }
+        body.dark-mode .btn-outline-dark,
+        body.dark-mode .btn-outline-secondary,
+        body.dark-mode .btn-outline-info,
+        body.dark-mode .btn-outline-danger,
+        body.dark-mode .btn-outline-primary {
+            background-color: var(--card-bg) !important;
+            color: var(--text-main) !important;
+        }
+        body.dark-mode .list-group-item {
+            color: var(--text-main) !important;
+            border-color: var(--border-color) !important;
+        }
+        body.dark-mode .alert-warning {
+            background-color: #2e2612 !important;
+            color: #ffda6a !important;
+            border: 1px solid #664d03 !important;
+        }
+        body.dark-mode #totalBalance {
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body>
+<div class="app-container">
+
 
     <!-- Header / Dashboard -->
     <div class="dashboard-header text-center relative">
@@ -171,16 +329,32 @@
         </div>
     </div>
 
-    <!-- Month Selector -->
+    <!-- Month & Year Selector -->
     <div class="mt-2">
+        <div class="d-flex align-items-center justify-content-between px-3 mb-1">
+            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-1" onclick="changeYear(-1)" title="سال قبل">
+                <i class="bi bi-chevron-right"></i> <span class="small">سال قبل</span>
+            </button>
+            <span class="fw-bold fs-6" id="yearHeaderDisplay"></span>
+            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-1" onclick="changeYear(1)" title="سال بعد">
+                <span class="small">سال بعد</span> <i class="bi bi-chevron-left"></i>
+            </button>
+        </div>
         <div class="month-scroll" id="monthContainer"></div>
     </div>
 
-    <!-- Search Box -->
+    <!-- Search Box & Wallet Filter Badge -->
     <div class="container mt-2">
+        <div class="d-flex gap-2 align-items-center mb-1" id="walletFilterBadgeContainer" style="display:none !important;">
+            <span class="badge bg-primary d-flex align-items-center gap-1 py-1 px-3 rounded-pill" id="walletFilterBadge">
+                <span>فیلتر کیف پول: </span>
+                <span id="walletFilterName" class="fw-bold"></span>
+                <button type="button" class="btn-close btn-close-white ms-1" style="font-size: 0.6rem;" onclick="setWalletFilter(null)"></button>
+            </span>
+        </div>
         <div class="input-group shadow-sm rounded-4 overflow-hidden border border-light">
             <span class="input-group-text bg-white border-0 text-muted"><i class="bi bi-search"></i></span>
-            <input type="text" id="searchInput" class="form-control bg-white border-0 py-2 text-dark" placeholder="جستجو (یا نام افراد با @)..." onkeyup="renderDashboard()">
+            <input type="text" id="searchInput" class="form-control bg-white border-0 py-2 text-dark" placeholder="جستجوی سراسری (یا نام افراد با @)..." onkeyup="renderDashboard()">
         </div>
     </div>
 
@@ -393,25 +567,54 @@
     <div class="overlay" id="mainOverlay" onclick="closeMiniDialogs()"></div>
 
     <!-- Core Logic -->
-    <script>
+    
+</div>
+<script>
         // PWA Configuration
-        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(()=>{}); }); }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(() => {});
+            });
+        }
 
         // Theme
         function applyTheme() {
             const isDark = localStorage.getItem('theme') === 'dark';
-            if (isDark) { document.body.classList.add('dark-mode'); document.getElementById('themeToggleBtn').innerHTML = '<i class="bi bi-brightness-high fs-5 text-warning"></i>'; }
-            else { document.body.classList.remove('dark-mode'); document.getElementById('themeToggleBtn').innerHTML = '<i class="bi bi-moon-stars fs-5"></i>'; }
+            const btn = document.getElementById('themeToggleBtn');
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                if (btn) btn.innerHTML = '<i class="bi bi-brightness-high fs-5 text-warning"></i>';
+            } else {
+                document.body.classList.remove('dark-mode');
+                if (btn) btn.innerHTML = '<i class="bi bi-moon-stars fs-5"></i>';
+            }
         }
-        function toggleTheme() { localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'light' : 'dark'); applyTheme(); }
+        function toggleTheme() {
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'light' : 'dark');
+            applyTheme();
+            renderMonths();
+        }
 
         // --- Persian Numeral Helpers ---
         const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        function toPersianNum(numStr) { return numStr.toString().replace(/\d/g, x => farsiDigits[x]); }
-        function parsePersianToEnglish(str) { return str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)); }
-        function formatMoney(num) { return toPersianNum(Number(num).toLocaleString('en-US')); }
-        function getRawAmount(formattedStr) { return Number(parsePersianToEnglish(formattedStr).replace(/,/g, '')); }
-        
+        function toPersianNum(numStr) {
+            if (numStr === null || numStr === undefined) return '';
+            return numStr.toString().replace(/\d/g, x => farsiDigits[x]);
+        }
+        function parsePersianToEnglish(str) {
+            if (!str) return '';
+            return str.toString()
+                .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+                .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+        }
+        function formatMoney(num) {
+            const n = Math.abs(Number(num) || 0);
+            return toPersianNum(n.toLocaleString('en-US'));
+        }
+        function getRawAmount(formattedStr) {
+            if (!formattedStr) return 0;
+            return Number(parsePersianToEnglish(formattedStr).replace(/,/g, '')) || 0;
+        }
         function formatInputMoney(input) {
             let enStr = parsePersianToEnglish(input.value);
             let val = enStr.replace(/,/g, '').replace(/[^0-9]/g, '');
@@ -420,26 +623,61 @@
 
         const PERSIAN_MONTHS = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
         const DEFAULT_CATS = [
-            {id:'supermarket',label:'سوپری',icon:'bi-cart3',bg:'bg-primary',type:'expense'},
-            {id:'transport',label:'حمل و نقل',icon:'bi-car-front',bg:'bg-info',type:'expense'},
-            {id:'bills',label:'اقساط',icon:'bi-file-text',bg:'bg-danger',type:'expense'},
-            {id:'other_expense',label:'سایر',icon:'bi-box',bg:'bg-secondary',type:'expense'},
-            {id:'salary',label:'حقوق',icon:'bi-cash-stack',bg:'bg-success',type:'income'},
-            {id:'other_income',label:'سایر',icon:'bi-wallet2',bg:'bg-success',type:'income'}
+            {id:'supermarket', label:'سوپری', icon:'bi-cart3', bg:'bg-primary', type:'expense'},
+            {id:'transport', label:'حمل و نقل', icon:'bi-car-front', bg:'bg-info', type:'expense'},
+            {id:'bills', label:'اقساط', icon:'bi-file-text', bg:'bg-danger', type:'expense'},
+            {id:'other_expense', label:'سایر', icon:'bi-box', bg:'bg-secondary', type:'expense'},
+            {id:'salary', label:'حقوق', icon:'bi-cash-stack', bg:'bg-success', type:'income'},
+            {id:'other_income', label:'سایر', icon:'bi-wallet2', bg:'bg-success', type:'income'}
         ];
 
-        let state = { transactions: [], customCategories: {expense: [], income: []}, wallets: [{id:'w1', name:'کیف پول اصلی'}], debts: [], recurringTxs: [] };
-        let currentType = 'expense'; let filterYear = ''; let filterMonth = ''; let editingTxId = null; let pendingReceiptDeletion = false;
+        let state = {
+            transactions: [],
+            customCategories: {expense: [], income: []},
+            wallets: [{id:'w1', name:'کیف پول اصلی'}],
+            debts: [],
+            recurringTxs: []
+        };
+        let currentType = 'expense';
+        let filterYear = '';
+        let filterMonth = '';
+        let editingTxId = null;
+        let pendingReceiptDeletion = false;
+        let selectedWalletFilter = null;
 
-        function getTodayPersianDate() { return toPersianNum(new Intl.DateTimeFormat('fa-IR-u-nu-latn', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()).replace(/\//g, '/')); }
-        function generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2); }
+        function getTodayPersianDate() {
+            return toPersianNum(new Intl.DateTimeFormat('fa-IR-u-nu-latn', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()).replace(/\//g, '/'));
+        }
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2, 6);
+        }
 
         async function loadData() {
+            let localTxs = JSON.parse(localStorage.getItem('mali_txs')) || [];
             try {
-                const res = await fetch('database.json?t=' + Date.now());
-                if (res.ok) { const d = await res.json(); state = { ...state, ...d }; saveToLocalStorage(); return; }
-            } catch(e) {}
-            state.transactions = JSON.parse(localStorage.getItem('mali_txs')) || [];
+                const res = await fetch('api.php?action=load&t=' + Date.now());
+                if (res.ok) {
+                    const d = await res.json();
+                    if (d && Array.isArray(d.transactions)) {
+                        // Merge local and server transactions to prevent offline data loss
+                        const txMap = new Map();
+                        d.transactions.forEach(t => txMap.set(t.id, t));
+                        localTxs.forEach(t => {
+                            if (!txMap.has(t.id)) txMap.set(t.id, t);
+                        });
+                        state.transactions = Array.from(txMap.values());
+                        state.customCategories = d.customCategories || state.customCategories;
+                        state.wallets = (d.wallets && d.wallets.length) ? d.wallets : state.wallets;
+                        state.debts = d.debts || state.debts;
+                        state.recurringTxs = d.recurringTxs || state.recurringTxs;
+                        saveToLocalStorage();
+                        return;
+                    }
+                }
+            } catch(e) {
+                console.log('Using local offline cache', e);
+            }
+            state.transactions = localTxs;
             state.customCategories = JSON.parse(localStorage.getItem('mali_cats')) || {expense: [], income: []};
             state.wallets = JSON.parse(localStorage.getItem('mali_wallets')) || [{id:'w1', name:'کیف پول اصلی'}];
             state.debts = JSON.parse(localStorage.getItem('mali_debts')) || [];
@@ -447,88 +685,187 @@
         }
 
         function saveToLocalStorage() {
-            localStorage.setItem('mali_txs', JSON.stringify(state.transactions)); localStorage.setItem('mali_cats', JSON.stringify(state.customCategories));
-            localStorage.setItem('mali_wallets', JSON.stringify(state.wallets)); localStorage.setItem('mali_debts', JSON.stringify(state.debts));
+            localStorage.setItem('mali_txs', JSON.stringify(state.transactions));
+            localStorage.setItem('mali_cats', JSON.stringify(state.customCategories));
+            localStorage.setItem('mali_wallets', JSON.stringify(state.wallets));
+            localStorage.setItem('mali_debts', JSON.stringify(state.debts));
             localStorage.setItem('mali_recurring', JSON.stringify(state.recurringTxs));
         }
 
         async function saveToDatabase() {
             saveToLocalStorage();
-            const btn = document.getElementById('syncBtn'); btn.innerHTML = '<i class="bi bi-arrow-repeat spinner-border spinner-border-sm"></i>';
+            const btn = document.getElementById('syncBtn');
+            if (btn) btn.innerHTML = '<i class="bi bi-arrow-repeat spinner-border spinner-border-sm"></i>';
             try {
-                const res = await fetch('api.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(state) });
-                if(res.ok) btn.innerHTML = '<i class="bi bi-check2 text-success"></i>'; else throw 'err';
-            } catch(e) { btn.innerHTML = '<i class="bi bi-cloud-slash text-warning"></i>'; }
-            setTimeout(() => { btn.innerHTML = '<i class="bi bi-cloud-arrow-up"></i> ذخیره ابری'; }, 2000);
+                const res = await fetch('api.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(state)
+                });
+                if (res.ok) {
+                    if (btn) btn.innerHTML = '<i class="bi bi-check2 text-success"></i>';
+                } else throw new Error('Save error');
+            } catch(e) {
+                if (btn) btn.innerHTML = '<i class="bi bi-cloud-slash text-warning"></i>';
+            }
+            setTimeout(() => {
+                if (btn) btn.innerHTML = '<i class="bi bi-cloud-arrow-up"></i> ذخیره ابری';
+            }, 2000);
         }
         function forceSync() { saveToDatabase(); }
 
-        // پاک کردن فایل از هاست (سرور)
         async function deleteFileFromHost(url) {
-            if(!url) return;
+            if (!url) return;
             try {
                 const fileName = url.split('/').pop();
-                await fetch('api.php?deleteFile=' + fileName);
+                await fetch('api.php?deleteFile=' + encodeURIComponent(fileName));
             } catch(e) { console.log('Delete file error', e); }
         }
 
         async function initApp() {
-            applyTheme(); const tp = parsePersianToEnglish(getTodayPersianDate()).split('/'); filterYear = tp[0]; filterMonth = tp[1];
+            applyTheme();
+            const tp = parsePersianToEnglish(getTodayPersianDate()).split('/');
+            filterYear = tp[0];
+            filterMonth = tp[1];
             await loadData();
-            initDatePickerData(); renderMonths(); renderDashboard(); checkNotifications();
+            initDatePickerData();
+            renderMonths();
+            renderDashboard();
+            checkNotifications();
+        }
+
+        function changeYear(delta) {
+            const y = Number(parsePersianToEnglish(filterYear)) + delta;
+            filterYear = String(y);
+            renderMonths();
+            renderDashboard();
         }
 
         function checkNotifications() {
-            if(state.recurringTxs.length > 0) {
-                document.getElementById('notifCount').innerText = toPersianNum(state.recurringTxs.length);
-                document.getElementById('notificationBox').style.display = 'block';
-            } else { document.getElementById('notificationBox').style.display = 'none'; }
+            const ym = `${toPersianNum(filterYear)}/${toPersianNum(filterMonth)}`;
+            const ymEn = `${filterYear}/${filterMonth}`;
+            // Count recurring transactions not yet applied for current month
+            const pendingRecs = state.recurringTxs.filter(rt => {
+                return !state.transactions.some(t => 
+                    (t.date.startsWith(ym) || parsePersianToEnglish(t.date).startsWith(ymEn)) &&
+                    t.description === rt.description &&
+                    t.amount === rt.amount
+                );
+            });
+
+            const box = document.getElementById('notificationBox');
+            if (pendingRecs.length > 0) {
+                document.getElementById('notifCount').innerText = toPersianNum(pendingRecs.length);
+                if (box) box.style.display = 'block';
+            } else {
+                if (box) box.style.display = 'none';
+            }
         }
 
         function renderMonths() {
-            const c = document.getElementById('monthContainer'); c.innerHTML = '';
+            const yh = document.getElementById('yearHeaderDisplay');
+            if (yh) yh.innerText = `سال ${toPersianNum(filterYear)}`;
+            const c = document.getElementById('monthContainer');
+            c.innerHTML = '';
             PERSIAN_MONTHS.forEach((m, idx) => {
-                const ms = String(idx + 1).padStart(2, '0'); const isSel = filterMonth === ms;
+                const ms = String(idx + 1).padStart(2, '0');
+                const isSel = filterMonth === ms;
                 const btn = document.createElement('button');
-                btn.className = `btn month-btn ${isSel ? (document.body.classList.contains('dark-mode')?'btn-light text-dark shadow':'btn-dark shadow') : 'btn-outline-secondary'}`;
+                btn.className = `btn month-btn ${isSel ? (document.body.classList.contains('dark-mode') ? 'btn-light text-dark shadow' : 'btn-dark shadow') : 'btn-outline-secondary'}`;
                 btn.innerText = `${m} ${toPersianNum(filterYear)}`;
-                btn.onclick = () => { filterMonth = ms; renderMonths(); renderDashboard(); };
+                btn.onclick = () => {
+                    filterMonth = ms;
+                    renderMonths();
+                    renderDashboard();
+                    checkNotifications();
+                };
                 c.appendChild(btn);
             });
-            setTimeout(() => { const a = c.querySelector('.shadow'); if(a) a.scrollIntoView({ behavior: 'smooth', inline: 'center' }); }, 100);
+            setTimeout(() => {
+                const a = c.querySelector('.shadow');
+                if (a) a.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+            }, 100);
         }
 
         function getAllCats() {
             return [...DEFAULT_CATS, ...(state.customCategories.expense || []), ...(state.customCategories.income || [])];
         }
 
+        function setWalletFilter(walletId) {
+            selectedWalletFilter = walletId;
+            const badgeContainer = document.getElementById('walletFilterBadgeContainer');
+            const badgeName = document.getElementById('walletFilterName');
+            if (walletId) {
+                const w = state.wallets.find(x => x.id === walletId);
+                if (badgeName) badgeName.innerText = w ? w.name : '';
+                if (badgeContainer) badgeContainer.style.setProperty('display', 'flex', 'important');
+            } else {
+                if (badgeContainer) badgeContainer.style.setProperty('display', 'none', 'important');
+            }
+            renderDashboard();
+        }
+
         function renderDashboard() {
-            const prefix = `${toPersianNum(filterYear)}/${toPersianNum(filterMonth)}`; const q = document.getElementById('searchInput').value.trim();
-            let ft = state.transactions.filter(tx => tx.date.startsWith(prefix) || parsePersianToEnglish(tx.date).startsWith(`${filterYear}/${filterMonth}`));
+            const prefix = `${toPersianNum(filterYear)}/${toPersianNum(filterMonth)}`;
+            const prefixEn = `${filterYear}/${filterMonth}`;
+            const q = document.getElementById('searchInput').value.trim();
             
-            // @Mentions
+            // Search logic: global when searching; month-scoped when not searching
+            let ft;
+            if (q) {
+                ft = state.transactions.filter(tx => tx.description.toLowerCase().includes(q.toLowerCase()));
+            } else {
+                ft = state.transactions.filter(tx => tx.date.startsWith(prefix) || parsePersianToEnglish(tx.date).startsWith(prefixEn));
+            }
+
+            // Wallet filter
+            if (selectedWalletFilter) {
+                ft = ft.filter(tx => tx.walletId === selectedWalletFilter);
+            }
+            
+            // @Mentions collection
             const mentionsSet = new Set();
-            ft.forEach(tx => { const matches = tx.description.match(/@[\w\u0600-\u06FF_]+/g); if(matches) matches.forEach(m => mentionsSet.add(m)); });
+            ft.forEach(tx => {
+                const matches = tx.description.match(/@[\w\u0600-\u06FF_]+/g);
+                if (matches) matches.forEach(m => mentionsSet.add(m));
+            });
             
-            if(q) ft = ft.filter(tx => tx.description.includes(q));
             ft.sort((a, b) => b.date.localeCompare(a.date));
             
-            let inc = 0; let exp = 0; const cTot = {}; const ac = getAllCats();
-            const lc = document.getElementById('transactionsList'); lc.innerHTML = '';
+            let inc = 0;
+            let exp = 0;
+            const cTot = {};
+            const ac = getAllCats();
+            const lc = document.getElementById('transactionsList');
+            lc.innerHTML = '';
 
-            if (ft.length === 0) lc.innerHTML = `<div class="text-center py-5 bg-white border-light rounded-4 border"><p class="text-muted small mt-2">تراکنشی یافت نشد.</p></div>`;
+            if (ft.length === 0) {
+                lc.innerHTML = `<div class="text-center py-5 bg-white border-light rounded-4 border"><p class="text-muted small mt-2">${q ? 'تراکنشی مطابق جستجو یافت نشد.' : 'تراکنشی در این بازه یافت نشد.'}</p></div>`;
+            }
 
             ft.forEach(tx => {
-                const ci = ac.find(c => c.id === tx.category) || DEFAULT_CATS[0]; const isInc = tx.type === 'income';
-                if (!isInc) { exp += tx.amount; cTot[tx.category] = (cTot[tx.category] || 0) + tx.amount; } else inc += tx.amount;
+                const ci = ac.find(c => c.id === tx.category) || DEFAULT_CATS[0];
+                const isInc = tx.type === 'income';
+                if (!isInc) {
+                    exp += tx.amount;
+                    cTot[tx.category] = (cTot[tx.category] || 0) + tx.amount;
+                } else {
+                    inc += tx.amount;
+                }
                 
-                let receiptHtml = tx.receiptUrl ? `<img src="${tx.receiptUrl}" class="receipt-thumb me-2" onclick="openImageViewer('${tx.receiptUrl}')">` : '';
+                let receiptHtml = tx.receiptUrl ? `<img src="${tx.receiptUrl}" class="receipt-thumb me-2" onclick="openImageViewer('${tx.receiptUrl}')" alt="رسید">` : '';
+                const walletObj = state.wallets.find(w => w.id === tx.walletId);
+                const walletBadge = walletObj ? `<span class="badge bg-secondary bg-opacity-25 text-secondary small me-1">${walletObj.name}</span>` : '';
+
                 lc.innerHTML += `
                     <div class="tx-card flex-column flex-sm-row gap-3 align-items-sm-center">
                         <div class="d-flex align-items-center gap-3 w-100">
                             <div class="tx-icon-wrapper ${ci.bg} bg-opacity-10 text-${ci.bg.replace('bg-','')}"><i class="${ci.icon}"></i></div>
                             <div class="flex-fill">
-                                <h6 class="mb-1 fw-bold text-dark">${tx.description}</h6>
+                                <div class="d-flex align-items-center gap-1 mb-1">
+                                    <h6 class="mb-0 fw-bold text-dark">${tx.description}</h6>
+                                    ${walletBadge}
+                                </div>
                                 <div class="text-muted d-flex align-items-center gap-1" style="font-size: 0.8rem;"><i class="bi bi-calendar3"></i> <span>${toPersianNum(tx.date)}</span></div>
                             </div>
                         </div>
@@ -546,101 +883,147 @@
                     </div>`;
             });
 
-            let absBalance = state.transactions.reduce((acc, t) => acc + (t.type === 'income' ? t.amount : -t.amount), 0);
-            document.getElementById('totalBalance').innerHTML = `${formatMoney(absBalance)} <span class="fs-6 fw-normal text-white-50">تومان</span>`;
-            document.getElementById('totalIncome').innerText = formatMoney(inc); document.getElementById('totalExpense').innerText = formatMoney(exp);
+            // Overall or filtered wallet balance
+            let balanceTxs = selectedWalletFilter 
+                ? state.transactions.filter(t => t.walletId === selectedWalletFilter)
+                : state.transactions;
+            let absBalance = balanceTxs.reduce((acc, t) => acc + (t.type === 'income' ? t.amount : -t.amount), 0);
+            
+            const balEl = document.getElementById('totalBalance');
+            balEl.dir = 'ltr';
+            balEl.innerHTML = `${absBalance < 0 ? '-' : ''}${formatMoney(Math.abs(absBalance))} <span class="fs-6 fw-normal text-white-50">تومان</span>`;
+            
+            document.getElementById('totalIncome').innerText = formatMoney(inc);
+            document.getElementById('totalExpense').innerText = formatMoney(exp);
 
-            const mc = document.getElementById('mentionsContainer'); mc.innerHTML = '';
+            const mc = document.getElementById('mentionsContainer');
+            mc.innerHTML = '';
             mentionsSet.forEach(m => {
                 const chip = document.createElement('span');
-                chip.className = `mention-chip ${q === m ? 'active' : ''}`; chip.innerText = m;
-                chip.onclick = () => { document.getElementById('searchInput').value = q === m ? '' : m; renderDashboard(); };
+                chip.className = `mention-chip ${q === m ? 'active' : ''}`;
+                chip.innerText = m;
+                chip.onclick = () => {
+                    document.getElementById('searchInput').value = q === m ? '' : m;
+                    renderDashboard();
+                };
                 mc.appendChild(chip);
             });
+
             renderChart(cTot, exp, ac);
         }
 
         function renderChart(cTot, exp, ac) {
             const cc = document.getElementById('chartContainer');
-            if(exp === 0) { cc.innerHTML = '<div class="text-center py-2 text-muted small">اطلاعاتی برای نمودار نیست</div>'; return; }
+            if (exp === 0) {
+                cc.innerHTML = '<div class="text-center py-2 text-muted small">اطلاعاتی برای نمودار نیست</div>';
+                return;
+            }
             cc.innerHTML = '';
-            Object.keys(cTot).sort((a,b)=>cTot[b]-cTot[a]).forEach(cid => {
-                const amt = cTot[cid]; const pct = Math.round((amt/exp)*100); const ci = ac.find(c=>c.id===cid); if(!ci) return;
+            Object.keys(cTot).sort((a,b) => cTot[b] - cTot[a]).forEach(cid => {
+                const amt = cTot[cid];
+                const pct = Math.round((amt / exp) * 100);
+                const ci = ac.find(c => c.id === cid);
+                if (!ci) return;
                 let cClass = ci.bg.replace('bg-','');
                 const hex = {'primary':'#0d6efd','success':'#198754','danger':'#dc3545','warning':'#ffc107','info':'#0dcaf0'}[cClass] || '#6c757d';
-                cc.innerHTML += `<div class="mb-2"><div class="d-flex justify-content-between small mb-1"><span class="text-dark"><i class="${ci.icon} me-1 text-muted"></i> ${ci.label}</span><span class="fw-bold text-muted">${formatMoney(amt)} (${toPersianNum(pct)}%)</span></div><div class="progress" style="height: 6px; border:1px solid #dee2e6"><div class="progress-bar" style="width: ${pct}%; background-color: ${hex}; -webkit-print-color-adjust: exact;"></div></div></div>`;
+                cc.innerHTML += `<div class="mb-2"><div class="d-flex justify-content-between small mb-1"><span class="text-dark"><i class="${ci.icon} me-1 text-muted"></i> ${ci.label}</span><span class="fw-bold text-muted">${formatMoney(amt)} (${toPersianNum(pct)}%)</span></div><div class="progress" style="height: 6px; background-color: rgba(0,0,0,0.05);"><div class="progress-bar" style="width: ${pct}%; background-color: ${hex}; border-radius: 10px;"></div></div></div>`;
             });
         }
 
-        // --- Modals & Core Actions ---
-        function setType(t) { 
-            currentType = t; 
-            document.getElementById('btnExpense').className = t==='expense' ? 'btn btn-danger fw-bold flex-fill shadow-sm' : 'btn btn-light text-muted fw-bold flex-fill'; 
-            document.getElementById('btnIncome').className = t==='income' ? 'btn btn-success fw-bold flex-fill shadow-sm' : 'btn btn-light text-muted fw-bold flex-fill'; 
-            
-            const sel = document.getElementById('txCategory'); sel.innerHTML = ''; 
-            const sourceCats = t === 'expense' ? [...DEFAULT_CATS.filter(c=>c.type==='expense'), ...(state.customCategories.expense || [])] : [...DEFAULT_CATS.filter(c=>c.type==='income'), ...(state.customCategories.income || [])];
-            sourceCats.forEach(c => sel.innerHTML += `<option value="${c.id}">${c.label}</option>`); 
-            
-            const wSel = document.getElementById('txWallet'); wSel.innerHTML = '';
-            state.wallets.forEach(w => wSel.innerHTML += `<option value="${w.id}">${w.name}</option>`);
+        function setType(type) {
+            currentType = type;
+            const be = document.getElementById('btnExpense');
+            const bi = document.getElementById('btnIncome');
+            if (type === 'expense') {
+                be.className = 'btn btn-danger fw-bold flex-fill shadow-sm';
+                bi.className = 'btn btn-light text-muted fw-bold flex-fill';
+            } else {
+                bi.className = 'btn btn-success fw-bold flex-fill shadow-sm';
+                be.className = 'btn btn-light text-muted fw-bold flex-fill';
+            }
+            renderCategorySelect();
+        }
+
+        function renderCategorySelect() {
+            const sel = document.getElementById('txCategory');
+            sel.innerHTML = '';
+            getAllCats().filter(c => c.type === currentType).forEach(c => {
+                sel.innerHTML += `<option value="${c.id}">${c.label}</option>`;
+            });
+        }
+
+        function renderWalletSelect() {
+            const sel = document.getElementById('txWallet');
+            sel.innerHTML = '';
+            state.wallets.forEach(w => {
+                sel.innerHTML += `<option value="${w.id}">${w.name}</option>`;
+            });
+            if (selectedWalletFilter) sel.value = selectedWalletFilter;
         }
 
         function openModalForNew() {
-            editingTxId = null; pendingReceiptDeletion = false;
-            document.getElementById('txModalTitle').innerText = 'ثبت تراکنش';
-            document.getElementById('submitBtn').innerText = 'ثبت';
-            document.getElementById('txDate').value = getTodayPersianDate(); 
-            document.getElementById('txAmount').value = ''; document.getElementById('txDesc').value = ''; document.getElementById('txReceipt').value = ''; 
-            document.getElementById('existingReceiptArea').classList.replace('d-flex', 'd-none');
-            setType('expense'); openWindow('txModal');
+            editingTxId = null;
+            pendingReceiptDeletion = false;
+            document.getElementById('txForm').reset();
+            document.getElementById('txModalTitle').innerText = 'ثبت تراکنش جدید';
+            document.getElementById('txDate').value = getTodayPersianDate();
+            document.getElementById('existingReceiptArea').classList.add('d-none');
+            document.getElementById('existingReceiptArea').classList.remove('d-flex');
+            setType('expense');
+            renderWalletSelect();
+            openWindow('txModal');
         }
 
         function editTx(id) {
-            const tx = state.transactions.find(t => t.id === id); if(!tx) return;
-            editingTxId = id; pendingReceiptDeletion = false;
+            const tx = state.transactions.find(t => t.id === id);
+            if (!tx) return;
+            editingTxId = id;
+            pendingReceiptDeletion = false;
             document.getElementById('txModalTitle').innerText = 'ویرایش تراکنش';
-            document.getElementById('submitBtn').innerText = 'ذخیره تغییرات';
             setType(tx.type);
             document.getElementById('txAmount').value = formatMoney(tx.amount);
             document.getElementById('txDesc').value = tx.description;
             document.getElementById('txDate').value = toPersianNum(tx.date);
+            renderWalletSelect();
+            document.getElementById('txCategory').value = tx.category;
+            document.getElementById('txWallet').value = tx.walletId;
             document.getElementById('txReceipt').value = '';
-            
-            if(tx.receiptUrl) {
-                document.getElementById('existingReceiptArea').classList.replace('d-none', 'd-flex');
+
+            const era = document.getElementById('existingReceiptArea');
+            if (tx.receiptUrl) {
+                era.classList.remove('d-none');
+                era.classList.add('d-flex');
                 document.getElementById('existingReceiptImg').src = tx.receiptUrl;
             } else {
-                document.getElementById('existingReceiptArea').classList.replace('d-flex', 'd-none');
+                era.classList.add('d-none');
+                era.classList.remove('d-flex');
             }
-
-            setTimeout(() => { 
-                document.getElementById('txCategory').value = tx.category; 
-                document.getElementById('txWallet').value = tx.walletId || 'w1';
-            }, 50);
             openWindow('txModal');
         }
 
         function markReceiptForDeletion() {
             pendingReceiptDeletion = true;
-            document.getElementById('existingReceiptArea').classList.replace('d-flex', 'd-none');
+            document.getElementById('existingReceiptArea').classList.add('d-none');
+            document.getElementById('existingReceiptArea').classList.remove('d-flex');
         }
 
-        function deleteTx(id) { 
-            if(confirm('تراکنش و فایل‌های وابسته آن حذف شود؟')) { 
+        function deleteTx(id) {
+            if (confirm('تراکنش و فایل‌های وابسته آن حذف شود؟')) {
                 const tx = state.transactions.find(t => t.id === id);
-                if(tx && tx.receiptUrl) deleteFileFromHost(tx.receiptUrl); // حذف فایل از هاست
-                state.transactions = state.transactions.filter(t => t.id !== id); 
-                saveToDatabase(); renderDashboard(); 
-            } 
+                if (tx && tx.receiptUrl) deleteFileFromHost(tx.receiptUrl);
+                state.transactions = state.transactions.filter(t => t.id !== id);
+                saveToDatabase();
+                renderDashboard();
+                checkNotifications();
+            }
         }
 
-        // --- Graphic Image Receipt Generator (html2canvas) ---
         async function generateAndShareReceipt(id) {
-            const tx = state.transactions.find(t => t.id === id); if(!tx) return;
-            const ac = getAllCats(); const ci = ac.find(c => c.id === tx.category) || DEFAULT_CATS[0];
+            const tx = state.transactions.find(t => t.id === id);
+            if (!tx) return;
+            const ac = getAllCats();
+            const ci = ac.find(c => c.id === tx.category) || DEFAULT_CATS[0];
             
-            // Populate Data
             document.getElementById('receiptAmount').innerText = formatMoney(tx.amount) + ' تومان';
             document.getElementById('receiptDesc').innerText = tx.description;
             document.getElementById('receiptDate').innerText = toPersianNum(tx.date);
@@ -648,181 +1031,450 @@
             document.getElementById('receiptType').innerText = tx.type === 'expense' ? 'پرداختی (خروج)' : 'دریافتی (ورود)';
             document.getElementById('receiptType').style.color = tx.type === 'expense' ? '#dc3545' : '#198754';
             
-            // اگر عکس داشت اضافه کن
-            if(tx.receiptUrl) {
+            if (tx.receiptUrl) {
                 document.getElementById('receiptExtraImage').innerHTML = `<div class="receipt-dashed"></div><div class="mt-3 text-center"><img src="${tx.receiptUrl}" style="max-width:100%; max-height:200px; border-radius:8px; border:1px solid #ddd;"></div>`;
             } else {
                 document.getElementById('receiptExtraImage').innerHTML = '';
             }
 
             const rDiv = document.getElementById('receiptTemplate');
-            rDiv.style.left = '0'; rDiv.style.top = '0'; rDiv.style.zIndex = '-99';
+            rDiv.style.left = '0';
+            rDiv.style.top = '0';
+            rDiv.style.zIndex = '-99';
             
             try {
                 const canvas = await html2canvas(rDiv, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
-                rDiv.style.left = '-10000px'; 
-                
+                rDiv.style.left = '-10000px';
                 canvas.toBlob(async (blob) => {
                     const file = new File([blob], `receipt_${tx.id}.png`, { type: 'image/png' });
                     if (navigator.canShare && navigator.canShare({ files: [file] })) {
                         try {
                             await navigator.share({ title: 'رسید تراکنش', text: `فاکتور: ${tx.description}`, files: [file] });
-                        } catch (err) { console.log('Share canceled or failed', err); }
+                        } catch (err) {}
                     } else {
-                        const link = document.createElement('a'); link.download = `receipt_${tx.id}.png`; link.href = canvas.toDataURL('image/png'); link.click();
-                        alert('گوشی شما از اشتراک‌گذاری مستقیم پشتیبانی نمی‌کند، عکس دانلود شد.');
+                        const link = document.createElement('a');
+                        link.download = `receipt_${tx.id}.png`;
+                        link.href = canvas.toDataURL('image/png');
+                        link.click();
+                        alert('رسید ذخیره شد.');
                     }
                 }, 'image/png');
             } catch(e) {
                 rDiv.style.left = '-10000px';
-                alert('خطا در تولید تصویر. لطفاً مجدد تلاش کنید.');
+                alert('خطا در تولید تصویر رسید.');
             }
         }
 
         async function handleFormSubmit(e) {
             e.preventDefault();
             const amt = getRawAmount(document.getElementById('txAmount').value);
-            const desc = document.getElementById('txDesc').value; const dt = document.getElementById('txDate').value; 
-            const cat = document.getElementById('txCategory').value; const wal = document.getElementById('txWallet').value;
+            const desc = document.getElementById('txDesc').value.trim();
+            const dt = document.getElementById('txDate').value;
+            const cat = document.getElementById('txCategory').value;
+            const wal = document.getElementById('txWallet').value;
             if (!amt || !desc || !dt) return;
 
-            const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.innerText = 'در حال پردازش...';
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerText = 'در حال پردازش...';
             
-            let rUrl = null; const fileInp = document.getElementById('txReceipt');
-            if(fileInp.files.length > 0) rUrl = await uploadReceiptFile(fileInp.files[0]);
+            let rUrl = null;
+            const fileInp = document.getElementById('txReceipt');
+            if (fileInp.files.length > 0) {
+                rUrl = await uploadReceiptFile(fileInp.files[0]);
+            }
 
             if (editingTxId) {
                 const idx = state.transactions.findIndex(t => t.id === editingTxId);
                 if (idx > -1) {
                     let oldUrl = state.transactions[idx].receiptUrl;
-                    state.transactions[idx] = { ...state.transactions[idx], type: currentType, amount: amt, description: desc, category: cat, walletId: wal, date: dt };
+                    state.transactions[idx] = {
+                        ...state.transactions[idx],
+                        type: currentType,
+                        amount: amt,
+                        description: desc,
+                        category: cat,
+                        walletId: wal,
+                        date: dt
+                    };
                     
                     if (rUrl) {
-                        if(oldUrl) deleteFileFromHost(oldUrl); // حذف فایل قبلی از هاست
+                        if (oldUrl) deleteFileFromHost(oldUrl);
                         state.transactions[idx].receiptUrl = rUrl;
                     } else if (pendingReceiptDeletion) {
-                        if(oldUrl) deleteFileFromHost(oldUrl); // اگر دکمه حذف زده شده بود فایل را کلا پاک کن
+                        if (oldUrl) deleteFileFromHost(oldUrl);
                         state.transactions[idx].receiptUrl = null;
                     }
                 }
             } else {
-                state.transactions.push({ id: generateId(), type: currentType, amount: amt, description: desc, category: cat, walletId: wal, date: dt, receiptUrl: rUrl });
+                state.transactions.push({
+                    id: generateId(),
+                    type: currentType,
+                    amount: amt,
+                    description: desc,
+                    category: cat,
+                    walletId: wal,
+                    date: dt,
+                    receiptUrl: rUrl
+                });
             }
             
             saveToDatabase();
-            btn.disabled = false; closeWindow('txModal'); renderDashboard();
+            btn.disabled = false;
+            btn.innerText = 'ثبت';
+            closeWindow('txModal');
+            renderDashboard();
+            checkNotifications();
         }
 
-        // --- Custom Categories ---
-        function saveCustomCategory() { 
-            const n = document.getElementById('newCatName').value.trim(); if(!n) return; 
-            const nc = { id: 'cat_'+generateId(), label: n, icon: currentType==='expense'?'bi-tag':'bi-tags', bg: currentType==='expense'?'bg-danger':'bg-success', text: currentType==='expense'?'text-danger':'text-success', type: currentType }; 
-            if(!state.customCategories[currentType]) state.customCategories[currentType] = [];
-            state.customCategories[currentType].push(nc); saveToDatabase(); setType(currentType); document.getElementById('txCategory').value = nc.id; document.getElementById('newCatName').value=''; closeMiniDialogs(); 
+        function saveCustomCategory() {
+            const name = document.getElementById('newCatName').value.trim();
+            if (!name) return;
+            const newCat = {
+                id: 'custom_' + generateId(),
+                label: name,
+                icon: 'bi-tag-fill',
+                bg: currentType === 'expense' ? 'bg-danger' : 'bg-success',
+                type: currentType
+            };
+            if (!state.customCategories[currentType]) state.customCategories[currentType] = [];
+            state.customCategories[currentType].push(newCat);
+            saveToDatabase();
+            renderCategorySelect();
+            document.getElementById('txCategory').value = newCat.id;
+            closeMiniDialogs();
+            document.getElementById('newCatName').value = '';
         }
 
         // --- Split Bill (Dong) ---
         function calculateDong() {
             const tot = getRawAmount(document.getElementById('dongTotal').value) || 0;
             const ppl = getRawAmount(document.getElementById('dongPeople').value) || 1;
-            document.getElementById('dongResult').innerText = formatMoney(tot / ppl);
+            document.getElementById('dongResult').innerText = formatMoney(Math.round(tot / ppl));
         }
         function addDongToDebt() {
             const name = document.getElementById('dongPersonName').value.trim();
             const dong = getRawAmount(document.getElementById('dongResult').innerText) || 0;
-            if(name && dong) {
-                state.debts.push({id:generateId(), person:name, type:'owe_me', amount:dong});
-                saveToDatabase(); document.getElementById('dongPersonName').value='';
+            if (name && dong) {
+                state.debts.push({ id: generateId(), person: name, type: 'owe_me', amount: dong });
+                saveToDatabase();
+                document.getElementById('dongPersonName').value = '';
                 alert(`طلبکاری از ${name} به مبلغ ${formatMoney(dong)} تومان در دفترچه ثبت شد.`);
+                renderDebts();
             }
         }
 
-        // --- Recurring ---
+        // --- Recurring Transactions ---
         function renderRecurringList() {
-            const list = document.getElementById('recurringList'); list.innerHTML = '';
-            state.recurringTxs.forEach(rt => { list.innerHTML += `<div class="d-flex justify-content-between align-items-center bg-white p-2 border border-light rounded mb-2"><div class="small fw-bold text-dark">${rt.description} <br><span class="text-danger">${formatMoney(rt.amount)} تومان</span></div><button onclick="deleteRecurring('${rt.id}')" class="btn btn-sm text-danger"><i class="bi bi-trash"></i></button></div>`; });
-        }
-        function addRecurringItem() {
-            const d = document.getElementById('recDesc').value; const a = getRawAmount(document.getElementById('recAmount').value);
-            if(d && a) { state.recurringTxs.push({ id: generateId(), description: d, amount: a, category: 'bills', type: 'expense' }); document.getElementById('recDesc').value=''; document.getElementById('recAmount').value=''; saveToDatabase(); renderRecurringList(); checkNotifications(); }
-        }
-        function deleteRecurring(id) { state.recurringTxs = state.recurringTxs.filter(r => r.id !== id); saveToDatabase(); renderRecurringList(); checkNotifications(); }
-        function applyRecurringToCurrentMonth() {
-            const dt = `${toPersianNum(filterYear)}/${toPersianNum(filterMonth)}/۰۱`;
-            state.recurringTxs.forEach(rt => { state.transactions.push({ id: generateId(), type: rt.type, amount: rt.amount, description: rt.description, category: rt.category, walletId:'w1', date: dt }); });
-            saveToDatabase(); closeWindow('recurringModal'); renderDashboard(); alert('اقساط ثبت شدند.');
-        }
-
-        // --- Wallets & Debts ---
-        function renderWallets() {
-            const list = document.getElementById('walletsList'); list.innerHTML = '';
-            state.wallets.forEach(w => {
-                let wBal = state.transactions.filter(t => t.walletId === w.id).reduce((acc, t) => acc + (t.type === 'income' ? t.amount : -t.amount), 0);
-                list.innerHTML += `<div class="d-flex justify-content-between p-2 border-bottom border-light"><span class="fw-bold">${w.name}</span> <span class="${wBal < 0 ? 'text-danger' : 'text-success'}">${formatMoney(wBal)} تومان</span></div>`;
+            const list = document.getElementById('recurringList');
+            list.innerHTML = '';
+            if (state.recurringTxs.length === 0) {
+                list.innerHTML = '<div class="text-muted small text-center py-2">قسط ثابتی تعریف نشده است.</div>';
+                return;
+            }
+            state.recurringTxs.forEach(rt => {
+                list.innerHTML += `
+                    <div class="d-flex justify-content-between align-items-center p-2 border-bottom border-light">
+                        <div>
+                            <span class="fw-bold">${rt.description}</span>
+                            <span class="text-danger small ms-2">${formatMoney(rt.amount)} تومان</span>
+                        </div>
+                        <button class="btn btn-sm text-danger p-0" onclick="deleteRecurring('${rt.id}')"><i class="bi bi-trash"></i></button>
+                    </div>`;
             });
         }
-        function addWallet() { const n = document.getElementById('newWalletName').value.trim(); if(n) { state.wallets.push({id:'w_'+generateId(), name:n}); document.getElementById('newWalletName').value=''; saveToDatabase(); renderWallets(); } }
+        function addRecurringItem() {
+            const desc = document.getElementById('recDesc').value.trim();
+            const amt = getRawAmount(document.getElementById('recAmount').value);
+            if (desc && amt) {
+                state.recurringTxs.push({ id: generateId(), description: desc, amount: amt, type: 'expense', category: 'bills' });
+                document.getElementById('recDesc').value = '';
+                document.getElementById('recAmount').value = '';
+                saveToDatabase();
+                renderRecurringList();
+                checkNotifications();
+            }
+        }
+        function deleteRecurring(id) {
+            state.recurringTxs = state.recurringTxs.filter(r => r.id !== id);
+            saveToDatabase();
+            renderRecurringList();
+            checkNotifications();
+        }
+        function applyRecurringToCurrentMonth() {
+            const ym = `${toPersianNum(filterYear)}/${toPersianNum(filterMonth)}`;
+            const ymEn = `${filterYear}/${filterMonth}`;
+            const dt = `${toPersianNum(filterYear)}/${toPersianNum(filterMonth)}/۰۱`;
+            let addedCount = 0;
 
+            state.recurringTxs.forEach(rt => {
+                // Prevent duplicate addition for current month
+                const exists = state.transactions.some(t => 
+                    (t.date.startsWith(ym) || parsePersianToEnglish(t.date).startsWith(ymEn)) &&
+                    t.description === rt.description &&
+                    t.amount === rt.amount
+                );
+                if (!exists) {
+                    state.transactions.push({
+                        id: generateId(),
+                        type: rt.type,
+                        amount: rt.amount,
+                        description: rt.description,
+                        category: rt.category,
+                        walletId: state.wallets[0]?.id || 'w1',
+                        date: dt,
+                        receiptUrl: null
+                    });
+                    addedCount++;
+                }
+            });
+
+            saveToDatabase();
+            closeWindow('recurringModal');
+            renderDashboard();
+            checkNotifications();
+            if (addedCount > 0) {
+                alert(`${toPersianNum(addedCount)} مورد قسط/پرداخت ثابت برای این ماه ثبت شد.`);
+            } else {
+                alert('کلیه اقساط از قبل در این ماه ثبت شده‌اند.');
+            }
+        }
+
+        // --- Wallets ---
+        function renderWallets() {
+            const list = document.getElementById('walletsList');
+            list.innerHTML = '';
+            
+            list.innerHTML += `
+                <div class="d-flex justify-content-between align-items-center p-2 border-bottom border-light">
+                    <span class="fw-bold">همه کیف‌پول‌ها</span>
+                    <button class="btn btn-sm ${!selectedWalletFilter ? 'btn-primary' : 'btn-outline-secondary'} rounded-pill px-3" onclick="setWalletFilter(null); closeWindow('walletsModal');">
+                        ${!selectedWalletFilter ? 'انتخاب شده' : 'نمایش همه'}
+                    </button>
+                </div>
+            `;
+
+            state.wallets.forEach(w => {
+                let wBal = state.transactions.filter(t => t.walletId === w.id).reduce((acc, t) => acc + (t.type === 'income' ? t.amount : -t.amount), 0);
+                const isFiltered = selectedWalletFilter === w.id;
+                const txCount = state.transactions.filter(t => t.walletId === w.id).length;
+                list.innerHTML += `
+                    <div class="d-flex justify-content-between align-items-center p-2 border-bottom border-light">
+                        <div>
+                            <span class="fw-bold">${w.name}</span>
+                            <div class="${wBal < 0 ? 'text-danger' : 'text-success'} small fw-bold" dir="ltr">${wBal < 0 ? '-' : ''}${formatMoney(Math.abs(wBal))} تومان</div>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <button class="btn btn-sm ${isFiltered ? 'btn-primary' : 'btn-outline-primary'} rounded-pill px-2 py-1 small" onclick="setWalletFilter('${w.id}'); closeWindow('walletsModal');">
+                                ${isFiltered ? 'فیلتر فعال' : 'فیلتر'}
+                            </button>
+                            ${state.wallets.length > 1 ? `<button class="btn btn-sm btn-outline-danger rounded-circle p-1" onclick="deleteWallet('${w.id}', ${txCount})" title="حذف"><i class="bi bi-trash"></i></button>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        function addWallet() {
+            const n = document.getElementById('newWalletName').value.trim();
+            if (n) {
+                state.wallets.push({ id: 'w_' + generateId(), name: n });
+                document.getElementById('newWalletName').value = '';
+                saveToDatabase();
+                renderWallets();
+            }
+        }
+        function deleteWallet(id, txCount) {
+            if (txCount > 0) {
+                alert('این کیف‌پول دارای تراکنش است و نمی‌توان آن را حذف کرد. ابتدا تراکنش‌های مرتبط را تغییر دهید.');
+                return;
+            }
+            if (confirm('آیا از حذف این کیف‌پول اطمینان دارید؟')) {
+                state.wallets = state.wallets.filter(w => w.id !== id);
+                if (selectedWalletFilter === id) setWalletFilter(null);
+                saveToDatabase();
+                renderWallets();
+            }
+        }
+
+        // --- Debts ---
         function renderDebts() {
-            const list = document.getElementById('debtsList'); list.innerHTML = '';
+            const list = document.getElementById('debtsList');
+            list.innerHTML = '';
+            if (state.debts.length === 0) {
+                list.innerHTML = '<div class="text-muted small text-center py-2">موردی در دفترچه طلب و بدهی ثبت نشده است.</div>';
+                return;
+            }
             state.debts.forEach(d => {
-                list.innerHTML += `<div class="d-flex justify-content-between align-items-center p-2 border-bottom border-light"><div><span class="fw-bold">${d.person}</span> <span class="badge ${d.type==='owe_me'?'bg-success':'bg-danger'}">${d.type==='owe_me'?'طلب':'بدهی'}</span></div><div class="d-flex align-items-center gap-2"><span class="fw-bold" dir="ltr">${formatMoney(d.amount)}</span> <button class="btn btn-sm text-muted p-0" onclick="delDebt('${d.id}')"><i class="bi bi-check-circle"></i></button></div></div>`;
+                list.innerHTML += `
+                    <div class="d-flex justify-content-between align-items-center p-2 border-bottom border-light">
+                        <div>
+                            <span class="fw-bold">${d.person}</span>
+                            <span class="badge ${d.type === 'owe_me' ? 'bg-success' : 'bg-danger'}">${d.type === 'owe_me' ? 'طلب' : 'بدهی'}</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold" dir="ltr">${formatMoney(d.amount)} تومان</span>
+                            <button class="btn btn-sm btn-outline-success p-1 rounded-circle" onclick="delDebt('${d.id}')" title="تسویه و حذف"><i class="bi bi-check-lg"></i></button>
+                        </div>
+                    </div>`;
             });
         }
         function addDebt() {
-            const p = document.getElementById('debtPerson').value; const t = document.getElementById('debtType').value; const a = getRawAmount(document.getElementById('debtAmount').value);
-            if(p && a) { state.debts.push({id:generateId(), person:p, type:t, amount:a}); document.getElementById('debtPerson').value=''; document.getElementById('debtAmount').value=''; saveToDatabase(); renderDebts(); }
+            const p = document.getElementById('debtPerson').value.trim();
+            const t = document.getElementById('debtType').value;
+            const a = getRawAmount(document.getElementById('debtAmount').value);
+            if (p && a) {
+                state.debts.push({ id: generateId(), person: p, type: t, amount: a });
+                document.getElementById('debtPerson').value = '';
+                document.getElementById('debtAmount').value = '';
+                saveToDatabase();
+                renderDebts();
+            }
         }
-        function delDebt(id) { state.debts = state.debts.filter(d => d.id !== id); saveToDatabase(); renderDebts(); }
+        function delDebt(id) {
+            const d = state.debts.find(item => item.id === id);
+            if (!d) return;
+            const isOweMe = d.type === 'owe_me';
+            const question = isOweMe 
+                ? `طلب از ${d.person} به مبلغ ${formatMoney(d.amount)} تومان تسویه شد.\nآیا مایلید این واریزی به عنوان "درآمد" در کیف‌پول ثبت شود؟`
+                : `بدهی به ${d.person} به مبلغ ${formatMoney(d.amount)} تومان تسویه شد.\nآیا مایلید این پرداختی به عنوان "هزینه" در کیف‌پول ثبت شود؟`;
+            
+            if (confirm(question)) {
+                state.transactions.push({
+                    id: generateId(),
+                    type: isOweMe ? 'income' : 'expense',
+                    amount: d.amount,
+                    description: isOweMe ? `تسویه طلب از @${d.person}` : `تسویه بدهی به @${d.person}`,
+                    category: isOweMe ? 'other_income' : 'other_expense',
+                    walletId: state.wallets[0]?.id || 'w1',
+                    date: getTodayPersianDate(),
+                    receiptUrl: null
+                });
+            }
+            state.debts = state.debts.filter(item => item.id !== id);
+            saveToDatabase();
+            renderDebts();
+            renderDashboard();
+        }
 
-        // Window Handlers
-        function openWindow(id) { 
-            if(id === 'walletsModal') renderWallets(); if(id === 'debtsModal') renderDebts(); if(id === 'recurringModal') renderRecurringList(); 
-            document.getElementById(id).classList.add('show'); 
+        // --- Window / Modal Handlers ---
+        function openWindow(id) {
+            if (id === 'walletsModal') renderWallets();
+            if (id === 'debtsModal') renderDebts();
+            if (id === 'recurringModal') renderRecurringList();
+            document.getElementById(id).classList.add('show');
         }
-        function closeWindow(id) { document.getElementById(id).classList.remove('show'); }
-        function closeMiniDialogs() { document.getElementById('mainOverlay').classList.remove('show'); document.getElementById('datePickerDialog').classList.remove('show'); document.getElementById('addCategoryDialog').classList.remove('show'); }
-        
-        // Date Picker (Smart Read existing value)
-        function initDatePickerData() { for(let i=1400; i<=1410; i++) document.getElementById('dpYear').innerHTML += `<option value="${toPersianNum(i)}">${toPersianNum(i)}</option>`; for(let i=1; i<=12; i++) document.getElementById('dpMonth').innerHTML += `<option value="${toPersianNum(String(i).padStart(2,'0'))}">${toPersianNum(String(i).padStart(2,'0'))}</option>`; for(let i=1; i<=31; i++) document.getElementById('dpDay').innerHTML += `<option value="${toPersianNum(String(i).padStart(2,'0'))}">${toPersianNum(String(i).padStart(2,'0'))}</option>`; }
+        function closeWindow(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+        function closeMiniDialogs() {
+            document.getElementById('mainOverlay').classList.remove('show');
+            document.getElementById('datePickerDialog').classList.remove('show');
+            document.getElementById('addCategoryDialog').classList.remove('show');
+        }
+
+        // --- Date Picker with Dynamic Days ---
+        function updateDaysForSelectedMonth() {
+            const m = Number(parsePersianToEnglish(document.getElementById('dpMonth').value)) || 1;
+            let maxDays = 31;
+            if (m >= 7 && m <= 11) maxDays = 30;
+            else if (m === 12) maxDays = 29; // 30 on leap year
+            
+            const currentDay = Math.min(Number(parsePersianToEnglish(document.getElementById('dpDay').value)) || 1, maxDays);
+            const daySelect = document.getElementById('dpDay');
+            daySelect.innerHTML = '';
+            for (let i = 1; i <= maxDays; i++) {
+                const val = toPersianNum(String(i).padStart(2, '0'));
+                daySelect.innerHTML += `<option value="${val}">${val}</option>`;
+            }
+            daySelect.value = toPersianNum(String(currentDay).padStart(2, '0'));
+        }
+
+        function initDatePickerData() {
+            const ySelect = document.getElementById('dpYear');
+            const mSelect = document.getElementById('dpMonth');
+            ySelect.innerHTML = '';
+            mSelect.innerHTML = '';
+            for (let i = 1395; i <= 1415; i++) ySelect.innerHTML += `<option value="${toPersianNum(i)}">${toPersianNum(i)}</option>`;
+            for (let i = 1; i <= 12; i++) mSelect.innerHTML += `<option value="${toPersianNum(String(i).padStart(2,'0'))}">${toPersianNum(String(i).padStart(2,'0'))}</option>`;
+            mSelect.onchange = updateDaysForSelectedMonth;
+            updateDaysForSelectedMonth();
+        }
+
         function openDatePicker() {
             const parts = parsePersianToEnglish(document.getElementById('txDate').value).split('/');
-            if(parts.length === 3) {
+            if (parts.length === 3) {
                 document.getElementById('dpYear').value = toPersianNum(parts[0]);
                 document.getElementById('dpMonth').value = toPersianNum(parts[1]);
+                updateDaysForSelectedMonth();
                 document.getElementById('dpDay').value = toPersianNum(parts[2]);
             }
             document.getElementById('mainOverlay').classList.add('show');
             document.getElementById('datePickerDialog').classList.add('show');
         }
-        function confirmDate() { document.getElementById('txDate').value = `${document.getElementById('dpYear').value}/${document.getElementById('dpMonth').value}/${document.getElementById('dpDay').value}`; closeMiniDialogs(); }
 
-        function openImageViewer(url) { document.getElementById('viewerImage').src = url; document.getElementById('imageViewerDialog').classList.add('show'); }
-        function closeImageViewer(e, force=false) { if (force || e.target.id === 'imageViewerDialog') { document.getElementById('imageViewerDialog').classList.remove('show'); document.getElementById('viewerImage').src = ''; } }
+        function confirmDate() {
+            document.getElementById('txDate').value = `${document.getElementById('dpYear').value}/${document.getElementById('dpMonth').value}/${document.getElementById('dpDay').value}`;
+            closeMiniDialogs();
+        }
 
-        // Client-Side Image Compression
+        // --- Image Viewer & Upload ---
+        function openImageViewer(url) {
+            document.getElementById('viewerImage').src = url;
+            document.getElementById('imageViewerDialog').classList.add('show');
+        }
+        function closeImageViewer(e, force = false) {
+            if (force || e.target.id === 'imageViewerDialog') {
+                document.getElementById('imageViewerDialog').classList.remove('show');
+            }
+        }
+
         function compressImage(file) {
             return new Promise((resolve) => {
-                const reader = new FileReader(); reader.readAsDataURL(file);
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
                 reader.onload = (e) => {
-                    const img = new Image(); img.src = e.target.result;
+                    const img = new Image();
+                    img.src = e.target.result;
                     img.onload = () => {
-                        const canvas = document.createElement('canvas'); const MAX_W = 800; let w = img.width; let h = img.height;
-                        if (w > h) { if (w > MAX_W) { h *= MAX_W / w; w = MAX_W; } } else { if (h > MAX_W) { w *= MAX_W / h; h = MAX_W; } }
-                        canvas.width = w; canvas.height = h; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, w, h);
-                        canvas.toBlob((blob) => resolve(blob), 'image/jpeg', 0.7);
+                        const canvas = document.createElement('canvas');
+                        const MAX_W = 1000;
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > h) {
+                            if (w > MAX_W) { h *= MAX_W / w; w = MAX_W; }
+                        } else {
+                            if (h > MAX_W) { w *= MAX_W / h; h = MAX_W; }
+                        }
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        canvas.toBlob((blob) => resolve(blob), 'image/jpeg', 0.75);
                     };
                 };
             });
         }
+
         async function uploadReceiptFile(file) {
-            const compressedBlob = await compressImage(file); const compFile = new File([compressedBlob], "receipt.jpg", { type: "image/jpeg" });
-            const formData = new FormData(); formData.append('receipt', compFile);
-            try { const res = await fetch('api.php', { method: 'POST', body: formData }); const data = await res.json(); if(data.status === 'success') return data.url; } catch(e) {}
+            const compressedBlob = await compressImage(file);
+            const compFile = new File([compressedBlob], "receipt.jpg", { type: "image/jpeg" });
+            const formData = new FormData();
+            formData.append('receipt', compFile);
+            try {
+                const res = await fetch('api.php', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (data.status === 'success') return data.url;
+                else {
+                    alert('خطا در بارگذاری تصویر فاکتور: ' + (data.message || 'نامشخص'));
+                }
+            } catch(e) {
+                alert('خطا در برقراری ارتباط با سرور برای آپلود تصویر.');
+            }
             return null;
         }
 
         initApp();
+
     </script>
 </body>
 </html>
