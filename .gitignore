@@ -1,17 +1,10 @@
-# اطلاعات خصوصی و داده‌های محیط اجرا
-config.php
-data/*.db
-data/*.db-*
+# Data and uploads (keep private!)
 database.json
-uploads/*
-!uploads/.htaccess
-backups/*
-error.log
-error_log
+uploads/
 *.log
 
-# فایل‌های خروجی و سیستم‌عامل
-*.zip
+# OS and Editor
 .DS_Store
-.idea/
+Thumbs.db
 .vscode/
+.idea/

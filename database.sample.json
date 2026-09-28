@@ -1,0 +1,15 @@
+{
+  "transactions": [],
+  "customCategories": {
+    "expense": [],
+    "income": []
+  },
+  "wallets": [
+    {
+      "id": "w1",
+      "name": "کیف پول اصلی"
+    }
+  ],
+  "debts": [],
+  "recurringTxs": []
+}
