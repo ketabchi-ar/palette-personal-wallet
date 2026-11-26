@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'ir.eshop24.cash'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "ir.eshop24.cash"
+        minSdk 24
+        targetSdk 34
+        versionCode 6
+        versionName "6.0.0"
+    }
+
+    signingConfigs {
+        release {
+            def ksPath = System.getenv("KEYSTORE_PATH")
+            if (ksPath != null && file(ksPath).exists()) {
+                storeFile file(ksPath)
+                storePassword System.getenv("KEYSTORE_PASS")
+                keyAlias System.getenv("KEY_ALIAS")
+                keyPassword System.getenv("KEY_PASS")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            if (System.getenv("KEYSTORE_PATH") != null && file(System.getenv("KEYSTORE_PATH")).exists()) {
+                signingConfig signingConfigs.release
+            } else {
+                signingConfig signingConfigs.debug
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

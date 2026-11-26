@@ -1,0 +1,68 @@
+name: Build and Release Android APK
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Generate Release Keystore
+        run: |
+          keytool -genkeypair -v \
+            -keystore "${{ runner.temp }}/release.keystore" \
+            -alias palette-cash \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass palette24eshop \
+            -keypass palette24eshop \
+            -dname "CN=Palette Personal Wallet, O=24eshop, C=IR"
+
+      - name: Build Release APK
+        env:
+          KEYSTORE_PATH: ${{ runner.temp }}/release.keystore
+          KEYSTORE_PASS: palette24eshop
+          KEY_ALIAS: palette-cash
+          KEY_PASS: palette24eshop
+        run: |
+          gradle -p android assembleRelease --no-daemon
+
+      - name: Prepare Release Artifact
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          if [[ "$GITHUB_REF_TYPE" != "tag" ]]; then
+            VERSION="v6.0.0"
+          fi
+          echo "RELEASE_TAG=$VERSION" >> "$GITHUB_ENV"
+          cp android/app/build/outputs/apk/release/app-release.apk "palette-personal-wallet-${VERSION}.apk"
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          name: "Palette Personal Wallet ${{ env.RELEASE_TAG }}"
+          body: |
+            نسخه اندروید (APK) کیف پول شخصی پالت متصل به `https://24eshop.ir/cash/`
+          files: palette-personal-wallet-${{ env.RELEASE_TAG }}.apk
